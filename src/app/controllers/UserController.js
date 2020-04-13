@@ -40,7 +40,7 @@ module.exports = {
                 }
             });
     
-            const user = await User.create({
+            await User.create({
                 trigram,
                 post_id: wanted_post.id,
                 name,
@@ -55,7 +55,7 @@ module.exports = {
 
         } catch (error) {
             return res.status(500).json({
-                "message-error": "There was a problem when handling this request to create users."
+                "message-error": "There was a problem when handling this request to create user."
             })
         }
     },
@@ -75,6 +75,10 @@ module.exports = {
                     attributes: ['name'],
                 },
             });
+
+            if(!user){
+                throw error;
+            }
     
             return res.status(200).json(user);
             
@@ -105,7 +109,7 @@ module.exports = {
                 }
             });
     
-            const user = await User.update({
+            const number_users = await User.update({
                 trigram,
                 post_id: wanted_post.id,
                 name,
@@ -117,7 +121,11 @@ module.exports = {
                     id: user_id,
                 }
             });
-    
+            
+            if(number_users < 1){
+                throw error;
+            }
+            
             return res.status(200).json({
                 "message": "User updated with sucess."
             });

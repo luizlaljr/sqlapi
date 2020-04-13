@@ -1,5 +1,6 @@
 const express = require('express');
 const UserController = require('./controllers/UserController');
+const MissionController = require('./controllers/MissionController');
 
 const routes = express.Router();
 
@@ -7,6 +8,12 @@ routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
 routes.get('/users/:user_id', UserController.show);
 routes.put('/users/:user_id', UserController.update);
-routes.delete('/users/:user_id', UserController.destroy)
+routes.delete('/users/:user_id', UserController.destroy);
+
+routes.get('/missions', MissionController.index);
+routes.post('/missions', MissionController.store);
+routes.get('/missions/:mission_id', MissionController.show);
+routes.put('/missions/:mission_id', MissionController.update);
+routes.delete('/missions/:mission_id', MissionController.destroy);
 
 module.exports = routes;
