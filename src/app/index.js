@@ -3,6 +3,6 @@ const dbConfig = require('../config/database');
 
 const connection = new Sequelize(dbConfig);
 
-
+Post.init(connection);
 
 module.exports = connection;
