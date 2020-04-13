@@ -3,7 +3,7 @@ const Post = require('../models/Post');
 
 module.exports = {
     async index(req, res) {
-        
+        try{
             const users = await User.findAll({
                 attributes: {
                     exclude: ['post_id', 'createdAt', 'updatedAt']
@@ -14,102 +14,143 @@ module.exports = {
                 },
             });
 
-            return res.status(200).json(users);            
-        
+            return res.status(200).json(users); 
+
+        } catch (error) {
+            return res.status(500).json({
+                "message-error": "There was a problem when handling this request to list users."
+            })
+        }
     },
 
     async store(req, res) {
-        const {
-            trigram,
-            post,
-            name,
-            condition,
-            date_condition,
-            status,
-        } = req.body;
+        try {
+            const {
+                trigram,
+                post,
+                name,
+                condition,
+                date_condition,
+                status,
+            } = req.body;
+    
+            const wanted_post = await Post.findOne({
+                where: {
+                    name: post,
+                }
+            });
+    
+            const user = await User.create({
+                trigram,
+                post_id: wanted_post.id,
+                name,
+                condition,
+                date_condition,
+                status,
+            });
+    
+            return res.status(201).json({
+                "message": "User created with sucess."
+            });
 
-        const wanted_post = await Post.findOne({
-            where: {
-                name: post,
-            }
-        });
-
-        const user = await User.create({
-            trigram,
-            post_id: wanted_post.id,
-            name,
-            condition,
-            date_condition,
-            status,
-        });
-
-        return res.json(user);
+        } catch (error) {
+            return res.status(500).json({
+                "message-error": "There was a problem when handling this request to create users."
+            })
+        }
     },
 
     async show(req, res) {
-        const {
-            user_id
-        } = req.params;
-
-        const user = await User.findByPk(user_id, {
-            attributes: {
-                exclude: ['post_id', 'createdAt', 'updatedAt']
-            },
-            include: {
-                association: 'post',
-                attributes: ['name'],
-            },
-        });
-
-        return res.json(user);
+        try {
+            const {
+                user_id
+            } = req.params;
+    
+            const user = await User.findByPk(user_id, {
+                attributes: {
+                    exclude: ['post_id', 'createdAt', 'updatedAt']
+                },
+                include: {
+                    association: 'post',
+                    attributes: ['name'],
+                },
+            });
+    
+            return res.status(200).json(user);
+            
+        } catch (error) {
+            return res.status(500).json({
+                "message-error": "There was a problem when handling this request to show user."
+            })
+        }
     },
 
     async update(req, res) {
-        const {
-            user_id
-        } = req.params;
-        const {
-            trigram,
-            post,
-            name,
-            condition,
-            date_condition,
-            status
-        } = req.body;
-
-        const wanted_post = await Post.findOne({
-            where: {
-                name: post,
-            }
-        });
-
-        const user = await User.update({
-            trigram,
-            post_id: wanted_post.id,
-            name,
-            condition,
-            date_condition,
-            status,
-        }, {
-            where: {
-                id: user_id,
-            }
-        });
-
-        return res.json(user);
+        try {
+            const {
+                user_id
+            } = req.params;
+            const {
+                trigram,
+                post,
+                name,
+                condition,
+                date_condition,
+                status
+            } = req.body;
+    
+            const wanted_post = await Post.findOne({
+                where: {
+                    name: post,
+                }
+            });
+    
+            const user = await User.update({
+                trigram,
+                post_id: wanted_post.id,
+                name,
+                condition,
+                date_condition,
+                status,
+            }, {
+                where: {
+                    id: user_id,
+                }
+            });
+    
+            return res.status(200).json({
+                "message": "User updated with sucess."
+            });
+            
+        } catch (error) {
+            return res.status(500).json({
+                "message-error": "There was a problem when handling this request to update user."
+            })
+        }
     },
 
     async destroy(req, res) {
-        const {
-            user_id
-        } = req.params;
-
-        User.destroy({
-            where: {
-                id: user_id,
+        try {
+            const {
+                user_id
+            } = req.params;
+    
+            const number_users = await User.destroy({
+                where: {
+                    id: user_id,
+                }
+            });
+            if(number_users < 1){
+                throw error;
             }
-        });
-
-        return res.json();
+            return res.status(202).json({
+                "message": "User deleted with sucess."
+            });
+            
+        } catch (error) {
+            return res.status(500).json({
+                "message-error": "There was a problem when handling this request to delete user."
+            })
+        }
     }
 }
