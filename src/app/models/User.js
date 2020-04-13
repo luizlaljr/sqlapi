@@ -16,17 +16,6 @@ class User extends Model {
         })
     }
 
-    static associate(models) {
-        this.belongsTo(models.Post, {
-            foreignKey: 'post_id',
-            as: 'post',
-        });
-        this.belongsToMany(models.Mission, {
-            foreignKey: 'user_id',
-            through: 'crews',
-            as: 'missions',
-        })
-    }
 }
 
 module.exports = User;
