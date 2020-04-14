@@ -1,6 +1,7 @@
 const express = require('express');
 const UserController = require('./controllers/UserController');
 const MissionController = require('./controllers/MissionController');
+const CrewController = require('./controllers/CrewController');
 
 const routes = express.Router();
 
@@ -15,5 +16,7 @@ routes.post('/missions', MissionController.store);
 routes.get('/missions/:mission_id', MissionController.show);
 routes.put('/missions/:mission_id', MissionController.update);
 routes.delete('/missions/:mission_id', MissionController.destroy);
+
+routes.post('/missions/:mission_id/crews', CrewController.store);
 
 module.exports = routes;
