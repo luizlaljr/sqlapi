@@ -21,6 +21,11 @@ class User extends Model {
             foreignKey: 'post_id',
             as: 'post',
         });
+        this.belongsToMany(models.Mission, {
+            foreignKey: 'user_id',
+            through: 'crews',
+            as: 'missions',
+        })
     }
 
 }

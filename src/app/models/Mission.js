@@ -19,6 +19,14 @@ class Mission extends Model {
         });
     };
 
+    static associate(models) {
+        this.belongsToMany(models.User, {
+            foreignKey: 'mission_id',
+            through: 'crews',
+            as: 'users',
+        });
+    }
+
 }
 
 module.exports = Mission;

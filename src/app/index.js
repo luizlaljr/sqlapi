@@ -12,5 +12,6 @@ User.init(connection);
 Mission.init(connection);
 
 User.associate(connection.models);
+Mission.associate(connection.models);
 
 module.exports = connection;
