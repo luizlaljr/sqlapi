@@ -6,7 +6,7 @@ const {
 class User extends Model {
     static init(sequelize) {
         super.init({
-            trigram: DataTypes.STRING(3),
+            trigram: DataTypes.STRING,
             name: DataTypes.STRING,
             condition: DataTypes.BOOLEAN,
             date_condition: DataTypes.DATE,

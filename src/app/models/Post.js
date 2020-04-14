@@ -6,8 +6,8 @@ const {
 class Post extends Model{
     static init(sequelize){
         super.init({
-            name: DataTypes.STRING(2),
-            factor: DataTypes.REAL,
+            name: DataTypes.STRING,
+            factor: DataTypes.FLOAT,
         },{
             sequelize,
         })

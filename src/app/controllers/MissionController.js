@@ -66,6 +66,10 @@ module.exports = {
             const mission = await Mission.findByPk(mission_id, {
                 include: {
                     association: 'users',
+                    attributes : [ 'trigram' ],
+                    through: {
+                        attributes: [],
+                    },
                 },
             });
 

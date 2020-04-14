@@ -7,11 +7,11 @@ class Mission extends Model {
     static init(sequelize) {
         super.init({
             number: DataTypes.STRING,
-            step: DataTypes.STRING(1),
-            locale: DataTypes.STRING(4),
-            amount: DataTypes.DECIMAL(5, 2),
+            step: DataTypes.STRING,
+            locale: DataTypes.STRING,
+            amount: DataTypes.FLOAT,
             transport: DataTypes.INTEGER,
-            value: DataTypes.DECIMAL(10, 2),
+            value: DataTypes.FLOAT,
             start: DataTypes.DATE,
             end: DataTypes.DATE,
         }, {

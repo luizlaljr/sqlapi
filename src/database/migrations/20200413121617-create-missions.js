@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false,
       },
       amount: {
-        type: Sequelize.DECIMAL(5,2),
+        type: Sequelize.REAL,
         allowNull: false,
       },
       transport: {
@@ -31,7 +31,7 @@ module.exports = {
         allowNull: false,
       },
       value: {
-        type: Sequelize.DECIMAL(10,2),
+        type: Sequelize.REAL,
         allowNull: false,
       },
       start: {
