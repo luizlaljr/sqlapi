@@ -3,6 +3,7 @@ const UserController = require('./controllers/UserController');
 const MissionController = require('./controllers/MissionController');
 const CrewController = require('./controllers/CrewController');
 const ReportController = require('./controllers/ReportController');
+const LoginController = require('./controllers/LoginController');
 
 const routes = express.Router();
 
@@ -22,5 +23,7 @@ routes.post('/missions/:mission_id/crews', CrewController.store);
 routes.delete('/missions/:mission_id/crews', CrewController.destroy);
 
 routes.get('/users/:user_id/reports', ReportController.show);
+
+routes.post('/login', LoginController.store);
 
 module.exports = routes;

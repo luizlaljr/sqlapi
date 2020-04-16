@@ -10,6 +10,11 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       trigram: {
         type: Sequelize.STRING(3),
         allowNull: false,

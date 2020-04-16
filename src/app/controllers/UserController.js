@@ -1,12 +1,13 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     async index(req, res) {
         try {
             const users = await User.findAll({
                 attributes: {
-                    exclude: ['post_id', 'createdAt', 'updatedAt']
+                    exclude: ['post_id', 'email', 'password', 'createdAt', 'updatedAt']
                 },
                 include: {
                     association: 'post',
@@ -26,6 +27,7 @@ module.exports = {
     async store(req, res) {
         try {
             const {
+                email,
                 trigram,
                 post,
                 name,
@@ -41,14 +43,17 @@ module.exports = {
                 },
             });
 
+            const password_encrypt = await bcrypt.hash(password, 10);
+
             await User.create({
+                email,
                 trigram,
                 post_id: wanted_post.id,
                 name,
                 condition,
                 date_condition,
                 status,
-                password,
+                password: password_encrypt,
             });
 
             return res.status(201).json({
@@ -72,6 +77,7 @@ module.exports = {
                 attributes: {
                     exclude: [
                         'post_id',
+                        'password',
                         'createdAt',
                         'updatedAt',
                     ],
@@ -121,6 +127,7 @@ module.exports = {
             const user = await User.findByPk(user_id);
 
             const number_users = await User.update({
+                email: user.email,
                 trigram: trigram != null ? trigram : user.trigram,
                 post_id: post != null ? wanted_post.id : user.post,
                 name: name != null ? name : user.name,
