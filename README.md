@@ -3,4 +3,4 @@ This project consists of a node.js api to provide data to an daily and commissio
 
 ## Technologies
 
-Nodejs, yarn, express, docker, postgres and sequelize with migrations. 
+Nodejs, yarn, express, docker, postgres, sequelize with migrations, bcrypt and jsonwebtoken. 
