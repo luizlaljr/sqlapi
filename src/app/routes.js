@@ -19,6 +19,7 @@ routes.put('/missions/:mission_id', MissionController.update);
 routes.delete('/missions/:mission_id', MissionController.destroy);
 
 routes.post('/missions/:mission_id/crews', CrewController.store);
+routes.delete('/missions/:mission_id/crews', CrewController.destroy);
 
 routes.get('/users/:user_id/reports', ReportController.show);
 

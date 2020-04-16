@@ -98,22 +98,24 @@ module.exports = {
                 end,
             } = req.body;
 
+            const mission = Mission.findByPk(mission_id);
+
             const number_missions = await Mission.update({
-                number,
-                step,
-                locale,
-                amount,
-                transport,
-                value,
-                start,
-                end,
+                number: number != null ? number : mission.number,
+                step: step != null ? step : mission.step,
+                locale: locale != null ? locale : mission.locale,
+                amount: amount != null ? amount : mission.amount,
+                transport: transport != null ? transport : mission.transport,
+                value: value != null ? value : mission.value,
+                start: start != null ? start : mission.start,
+                end: end != null ? end : mission.end,
             }, {
                 where: {
                     id: mission_id,
                 },
             });
 
-            if (number_missions < 1) {
+            if (number_missions != 1) {
                 throw error;
             };
 

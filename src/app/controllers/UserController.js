@@ -32,6 +32,7 @@ module.exports = {
                 condition,
                 date_condition,
                 status,
+                password,
             } = req.body;
 
             const wanted_post = await Post.findOne({
@@ -47,6 +48,7 @@ module.exports = {
                 condition,
                 date_condition,
                 status,
+                password,
             });
 
             return res.status(201).json({
@@ -107,26 +109,32 @@ module.exports = {
                 status,
             } = req.body;
 
-            const wanted_post = await Post.findOne({
-                where: {
-                    name: post,
-                }
-            });
+            let wanted_post = '';
+            if (post != null) {
+                wanted_post = await Post.findOne({
+                    where: {
+                        name: post,
+                    }
+                });
+            }
+
+            const user = await User.findByPk(user_id);
 
             const number_users = await User.update({
-                trigram,
-                post_id: wanted_post.id,
-                name,
-                condition,
-                date_condition,
-                status,
+                trigram: trigram != null ? trigram : user.trigram,
+                post_id: post != null ? wanted_post.id : user.post,
+                name: name != null ? name : user.name,
+                condition: condition != null ? condition : user.condition,
+                date_condition: date_condition != null ? date_condition : user.date_condition,
+                status: status != null ? status : user.status,
+                password: user.password,
             }, {
                 where: {
                     id: user_id,
                 }
             });
 
-            if (number_users < 1) {
+            if (number_users != 1) {
                 throw error;
             };
 
@@ -137,6 +145,7 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to update user.",
+                "error": `${error}`,
             });
         };
     },

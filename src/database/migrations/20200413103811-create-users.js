@@ -13,6 +13,7 @@ module.exports = {
       trigram: {
         type: Sequelize.STRING(3),
         allowNull: false,
+        unique: true,
       },
       post_id: {
         type: Sequelize.INTEGER,
@@ -38,6 +39,10 @@ module.exports = {
       },
       status: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      password: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

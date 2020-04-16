@@ -11,6 +11,7 @@ class User extends Model {
             condition: DataTypes.BOOLEAN,
             date_condition: DataTypes.DATE,
             status: DataTypes.BOOLEAN,
+            password: DataTypes.STRING,
         }, {
             sequelize,
         })
