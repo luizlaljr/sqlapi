@@ -5,6 +5,8 @@ const CrewController = require('./controllers/CrewController');
 const ReportController = require('./controllers/ReportController');
 const LoginController = require('./controllers/LoginController');
 
+const LoginMiddleware = require('./middlewares/LoginMiddleware');
+
 const routes = express.Router();
 
 routes.get('/users', UserController.index);
@@ -22,7 +24,7 @@ routes.delete('/missions/:mission_id', MissionController.destroy);
 routes.post('/missions/:mission_id/crews', CrewController.store);
 routes.delete('/missions/:mission_id/crews', CrewController.destroy);
 
-routes.get('/users/:user_id/reports', ReportController.show);
+routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);
 
 routes.post('/login', LoginController.store);
 

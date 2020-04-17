@@ -9,7 +9,7 @@ module.exports = {
                 user_id
             } = req.params;
 
-            const user = await User.findByPk(user_id, {
+            const user = await User.findByPk(user_id,{
                 attributes: [],
                 include: [{
                     association: 'missions',
