@@ -6,7 +6,8 @@
   "author": "luizlaljr <luizlaljr@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/app/server.js"
+    "dev": "nodemon src/app/server.js",
+    "start": "node src/app/server.js"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
