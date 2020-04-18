@@ -19,7 +19,13 @@ module.exports = {
                 },
             });
 
-            await mission.addUser(user);
+            const user_added = await mission.addUser(user);
+
+            if (!user_added) {
+                return res.status(409).json({
+                    "message": "User is already in the mission.",
+                });
+            }
 
             return res.status(201).json({
                 "message": "Crew created with sucess.",

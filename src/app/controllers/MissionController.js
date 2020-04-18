@@ -1,12 +1,14 @@
 const Mission = require('../models/Mission');
+const { Op } = require('sequelize');
 
 module.exports = {
     async index(req, res) {
         try {
             const missions = await Mission.findAll({
+                order: [ 'start' ],
                 include: {
                     association: 'users',
-                    attributes : [ 'trigram' ],
+                    attributes: ['trigram'],
                     through: {
                         attributes: [],
                     },
@@ -35,20 +37,34 @@ module.exports = {
                 end,
             } = req.body;
 
-            await Mission.create({
-                number,
-                step,
-                locale,
-                amount,
-                transport,
-                value,
-                start,
-                end,
+            const existMission = await Mission.findAll({
+                where: {
+                    number: { [Op.eq] : number},
+                    step: { [Op.eq] : step},
+                    start: { [Op.eq] : new Date(start)},
+                },
             });
+            
+            if (existMission[0] == null) {
+                await Mission.create({
+                    number,
+                    step,
+                    locale,
+                    amount,
+                    transport,
+                    value,
+                    start,
+                    end,
+                });
 
-            return res.status(201).json({
-                "message": "Mission created with sucess.",
-            });
+                return res.status(201).json({
+                    "message": "Mission created with sucess.",
+                });
+            }else{
+                return res.status(409).json({
+                    "message": "Mission is already in the database.",
+                });
+            }
 
         } catch (error) {
             return res.status(500).json({
@@ -66,7 +82,7 @@ module.exports = {
             const mission = await Mission.findByPk(mission_id, {
                 include: {
                     association: 'users',
-                    attributes : [ 'trigram' ],
+                    attributes: ['trigram'],
                     through: {
                         attributes: [],
                     },

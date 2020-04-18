@@ -113,6 +113,7 @@ module.exports = {
                 condition,
                 date_condition,
                 status,
+                profile,
             } = req.body;
 
             let wanted_post = '';
@@ -135,6 +136,7 @@ module.exports = {
                 date_condition: date_condition != null ? date_condition : user.date_condition,
                 status: status != null ? status : user.status,
                 password: user.password,
+                profile: profile != null ? profile : user.profile,
             }, {
                 where: {
                     id: user_id,
@@ -152,7 +154,6 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to update user.",
-                "error": `${error}`,
             });
         };
     },

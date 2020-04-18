@@ -50,6 +50,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      profile: {
+        type: Sequelize.STRING(1),
+        defaultValue: 'C',
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
