@@ -55,8 +55,8 @@ module.exports = {
             }
 
             res.status(200).json({
-                total_amount: parseFloat(total_amount).toFixed(1),
-                total_value: parseFloat(total_value).toFixed(2),
+                total_amount: parseFloat(total_amount.toFixed(1)),
+                total_value: parseFloat(total_value.toFixed(2)),
             });
 
         } catch (error) {
