@@ -55,8 +55,8 @@ module.exports = {
             }
 
             res.status(200).json({
-                total_amount: total_amount,
-                total_value: total_value
+                total_amount: total_amount.toFixed(1),
+                total_value: total_value.toFixed(2),
             });
 
         } catch (error) {
