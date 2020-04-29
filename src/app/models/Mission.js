@@ -22,7 +22,7 @@ class Mission extends Model {
     static associate(models) {
         this.belongsToMany(models.User, {
             foreignKey: 'mission_id',
-            through: 'crews',
+            through: models.Crew,
             as: 'users',
         });
     }

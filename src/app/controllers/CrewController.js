@@ -9,6 +9,7 @@ module.exports = {
             } = req.params;
             const {
                 trigram,
+                link
             } = req.body;
 
             const mission = await Mission.findByPk(mission_id);
@@ -19,7 +20,7 @@ module.exports = {
                 },
             });
 
-            const user_added = await mission.addUser(user);
+            const user_added = await mission.addUser(user, { through: { link: link }});
 
             if (!user_added) {
                 return res.status(409).json({

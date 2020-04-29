@@ -20,6 +20,7 @@ module.exports = {
 
             const user = await User.findByPk(user_id,{
                 attributes: [],
+                order: [['missions','start']],
                 include: [{
                     association: 'missions',
                     where: {

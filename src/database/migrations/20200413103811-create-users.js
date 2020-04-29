@@ -15,6 +15,10 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      antique: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       trigram: {
         type: Sequelize.STRING(3),
         allowNull: false,

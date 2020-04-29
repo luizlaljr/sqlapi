@@ -5,12 +5,12 @@ module.exports = {
     async index(req, res) {
         try {
             const missions = await Mission.findAll({
-                order: [ 'start' ],
+                order: [ 'start', ['users', 'antique' ] ],
                 include: {
                     association: 'users',
                     attributes: ['trigram'],
                     through: {
-                        attributes: [],
+                        attributes: [],                        
                     },
                 },
             });

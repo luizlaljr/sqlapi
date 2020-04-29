@@ -7,6 +7,7 @@ class User extends Model {
     static init(sequelize) {
         super.init({
             email: DataTypes.STRING,
+            antique: DataTypes.INTEGER,
             trigram: DataTypes.STRING,
             name: DataTypes.STRING,
             condition: DataTypes.BOOLEAN,
@@ -26,7 +27,7 @@ class User extends Model {
         });
         this.belongsToMany(models.Mission, {
             foreignKey: 'user_id',
-            through: 'crews',
+            through: models.Crew,
             as: 'missions',
         })
     }

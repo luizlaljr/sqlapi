@@ -3,7 +3,7 @@ const Post = require('../models/Post');
 const bcrypt = require('bcrypt');
 
 module.exports = {
-    async index(req, res) {
+    async index(_req, res) {
         try {
             const users = await User.findAll({
                 attributes: {
@@ -13,8 +13,9 @@ module.exports = {
                     association: 'post',
                     attributes: ['name'],
                 },
+                order: [ 'antique'],
             });
-
+            
             return res.status(200).json(users);
 
         } catch (error) {
@@ -28,6 +29,7 @@ module.exports = {
         try {
             const {
                 email,
+                antique,
                 trigram,
                 post,
                 name,
@@ -47,6 +49,7 @@ module.exports = {
 
             await User.create({
                 email,
+                antique,
                 trigram,
                 post_id: wanted_post.id,
                 name,
@@ -108,6 +111,7 @@ module.exports = {
                 user_id,
             } = req.params;
             const {
+                antique,
                 trigram,
                 post,
                 name,
@@ -130,6 +134,7 @@ module.exports = {
 
             const number_users = await User.update({
                 email: user.email,
+                antique: antique != null ? antique : user.antique,
                 trigram: trigram != null ? trigram : user.trigram,
                 post_id: post != null ? wanted_post.id : user.post,
                 name: name != null ? name : user.name,

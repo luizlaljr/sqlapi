@@ -1,0 +1,22 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "sqlapi",
+            "dialect": "PostgreSQL",
+            "name": "sqlapi",
+            "password": "postgres",
+            "port": 5432,
+            "server": "localhost",
+            "username": "postgres"
+        },
+        {
+            "database": "postgres",
+            "dialect": "PostgreSQL",
+            "name": "sqlapi2",
+            "password": "postgres",
+            "port": 5432,
+            "server": "localhost",
+            "username": "postgres"
+        }
+    ]
+}
