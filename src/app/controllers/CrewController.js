@@ -45,10 +45,11 @@ module.exports = {
                     trigram: trigram
                 },
             });
-
+            
+            userLink = user.getDataValue('condition') ? 'C' : 'D';
             const user_added = await mission.addUser(user, {
                 through: {
-                    link: link != null ? link : user[0].condition, 
+                    link: link != null ? link : userLink, 
                 }
             });
 
@@ -63,7 +64,6 @@ module.exports = {
             });
 
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to create crew.",
             });
