@@ -146,18 +146,12 @@ module.exports = {
         try {
             const {
                 mission_id,
+                user_id,
             } = req.params;
-            const {
-                trigram,
-            } = req.body;
 
             const mission = await Mission.findByPk(mission_id);
 
-            const user = await User.findOne({
-                where: {
-                    trigram: trigram
-                },
-            });
+            const user = await User.findByPk(user_id);
 
             await mission.removeUser(user);
 
