@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      value: {
+      income: {
         type: Sequelize.REAL,
         allowNull: false,
       },

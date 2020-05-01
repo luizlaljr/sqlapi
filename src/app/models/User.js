@@ -30,6 +30,9 @@ class User extends Model {
             through: models.Crew,
             as: 'missions',
         })
+        this.hasMany(models.Crew, {
+            as: 'crews',
+        })
     }
 
 }

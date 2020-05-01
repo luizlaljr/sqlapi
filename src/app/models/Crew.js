@@ -11,6 +11,17 @@ class Crew extends Model{
             sequelize,
         })
     };
+
+    static associate(models) {
+        this.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            as: 'users',
+        });
+        this.belongsTo(models.Mission, {
+            foreignKey: 'mission_id',
+            as: 'missions',
+        });
+    }
 }
 
 module.exports = Crew;

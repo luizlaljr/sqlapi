@@ -22,7 +22,10 @@ routes.get('/missions/:mission_id', MissionController.show);
 routes.put('/missions/:mission_id', MissionController.update);
 routes.delete('/missions/:mission_id', MissionController.destroy);
 
+routes.get('/missions/:mission_id/crews', CrewController.index);
 routes.post('/missions/:mission_id/crews', CrewController.store);
+routes.get('/missions/:mission_id/crews/:user_id', CrewController.show);
+routes.put('/missions/:mission_id/crews/:user_id', CrewController.update);
 routes.delete('/missions/:mission_id/crews', CrewController.destroy);
 
 routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);

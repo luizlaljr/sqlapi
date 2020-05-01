@@ -32,7 +32,7 @@ module.exports = {
                 locale,
                 amount,
                 transport,
-                value,
+                income,
                 start,
                 end,
             } = req.body;
@@ -52,7 +52,7 @@ module.exports = {
                     locale,
                     amount,
                     transport,
-                    value,
+                    income,
                     start,
                     end,
                 });
@@ -110,7 +110,7 @@ module.exports = {
                 locale,
                 amount,
                 transport,
-                value,
+                income,
                 start,
                 end,
             } = req.body;
@@ -123,7 +123,7 @@ module.exports = {
                 locale: locale != null ? locale : mission.locale,
                 amount: amount != null ? amount : mission.amount,
                 transport: transport != null ? transport : mission.transport,
-                value: value != null ? value : mission.value,
+                income: income != null ? income : mission.income,
                 start: start != null ? start : mission.start,
                 end: end != null ? end : mission.end,
             }, {

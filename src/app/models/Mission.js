@@ -11,7 +11,7 @@ class Mission extends Model {
             locale: DataTypes.STRING,
             amount: DataTypes.FLOAT,
             transport: DataTypes.INTEGER,
-            value: DataTypes.FLOAT,
+            income: DataTypes.FLOAT,
             start: DataTypes.DATE,
             end: DataTypes.DATE,
         }, {
@@ -25,6 +25,9 @@ class Mission extends Model {
             through: models.Crew,
             as: 'users',
         });
+        this.hasMany(models.Crew, {
+            as: 'crews',
+        })
     }
 
 }
