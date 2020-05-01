@@ -1,5 +1,7 @@
 const User = require('../models/User');
-const { Op } = require('sequelize');
+const {
+    Op
+} = require('sequelize');
 
 module.exports = {
 
@@ -9,7 +11,10 @@ module.exports = {
                 user_id
             } = req.params;
 
-            const { condition, date_condition } = await User.findByPk(user_id); 
+            const {
+                condition,
+                date_condition
+            } = await User.findByPk(user_id);
 
             function base_date_condition() {
                 initdate = new Date();
@@ -18,13 +23,17 @@ module.exports = {
                 return condition ? date_condition : initdate;
             }
 
-            const user = await User.findByPk(user_id,{
+            const user = await User.findByPk(user_id, {
                 attributes: [],
-                order: [['missions','start']],
+                order: [
+                    ['missions', 'start']
+                ],
                 include: [{
                     association: 'missions',
                     where: {
-                        start : {[Op.gte] : base_date_condition() }
+                        start: {
+                            [Op.gte]: base_date_condition()
+                        }
                     },
                     attributes: {
                         exclude: ['id', 'createdAt', 'updatedAt']
@@ -40,11 +49,11 @@ module.exports = {
                 }]
             });
 
-            for ( let i = 0; i < user.missions.length ; i++ ){
-                
-                user.missions[i].value = parseFloat((user.missions[i].value * user.post.factor + user.missions[i].transport * 95).toFixed(2));
+            for (let i = 0; i < user.missions.length; i++) {
+
+                user.missions[i].income = parseFloat((user.missions[i].income * user.post.factor + user.missions[i].transport * 95).toFixed(2));
             }
-            
+
             res.status(200).json(user);
 
         } catch (error) {

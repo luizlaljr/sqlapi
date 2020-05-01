@@ -1,7 +1,7 @@
 const User = require('../models/User');
-const {
-    Op
-} = require('sequelize');
+const { base_date_condition } = require('../utils/BaseDateConditions');
+
+const con = require('../index');
 
 module.exports = {
 
@@ -16,48 +16,15 @@ module.exports = {
                 date_condition
             } = await User.findByPk(user_id);
 
-            function base_date_condition() {
-                initdate = new Date();
-                initdate.setDate(1);
-                initdate.setMonth(0);
-                return condition ? date_condition : initdate;
-            }
-
-            const user = await User.findByPk(user_id, {
-                attributes: [],
-                include: [{
-                    association: 'missions',
-                    where: {
-                        start: {
-                            [Op.gte]: base_date_condition()
-                        }
-                    },
-                    attributes: {
-                        exclude: ['id', 'createdAt', 'updatedAt']
-                    },
-                    through: {
-                        attributes: []
-                    },
-                }, {
-                    association: 'post',
-                    attributes: {
-                        exclude: ['id', 'createdAt', 'updatedAt']
-                    }
-                }]
+            initDate = base_date_condition(condition,date_condition);
+            
+            const users = await User.sequelize.query(`SELECT crews.link, SUM(amount) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income FROM users LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON users.id = crews.user_id LEFT OUTER JOIN posts ON users.post_id = posts.id WHERE users.id = ${user_id} AND missions.start >= ${initDate} GROUP BY crews.link, posts.factor`, {
+                model: User,
+                mapToModel: true,
+                nest: true,
             });
-
-            let total_amount = 0.0;
-            let total_value = 0.0;
-            for (let i = 0; i < user.missions.length; i++) {
-
-                total_amount += user.missions[i].amount;
-                total_value += parseFloat((user.missions[i].value * user.post.factor + user.missions[i].transport * 95).toFixed(2));
-            }
-
-            res.status(200).json({
-                total_amount: parseFloat(total_amount.toFixed(1)),
-                total_value: parseFloat(total_value.toFixed(2)),
-            });
+            
+            res.status(200).json(users);
 
         } catch (error) {
             return res.status(500).json({
