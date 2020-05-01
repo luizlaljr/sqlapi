@@ -18,7 +18,6 @@ module.exports = {
                 attributes: ['trigram']
             });
 
-            //return res.status(200).json({'trigram': crews.trigram, 'link': crews.link});
             return res.status(200).json(crews);
 
         } catch (error) {
@@ -49,7 +48,7 @@ module.exports = {
 
             const user_added = await mission.addUser(user, {
                 through: {
-                    link: link
+                    link: link != null ? link : user.condition, 
                 }
             });
 
