@@ -48,7 +48,7 @@ module.exports = {
 
             const user_added = await mission.addUser(user, {
                 through: {
-                    link: link != null ? link : user.condition, 
+                    link: link != null ? link : user[0].condition, 
                 }
             });
 
