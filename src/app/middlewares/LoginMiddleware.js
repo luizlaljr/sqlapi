@@ -16,10 +16,6 @@ module.exports = async (req, res, next) => {
         next();
     } catch (error) {
         return res.status(401).send({message_error: 'Authentication failed.',
-        user: token_user,
-        trigram: token_user.trigram,
-        id: token_user.id,        
-        user_id: user_id,
     });
     }
 }
