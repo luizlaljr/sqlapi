@@ -6,6 +6,7 @@ const {
 class Mission extends Model {
     static init(sequelize) {
         super.init({
+            kind: DataTypes.STRING,
             number: DataTypes.STRING,
             step: DataTypes.STRING,
             locale: DataTypes.STRING,

@@ -27,6 +27,7 @@ module.exports = {
     async store(req, res) {
         try {
             const {
+                kind,
                 number,
                 step,
                 locale,
@@ -47,6 +48,7 @@ module.exports = {
             
             if (existMission[0] == null) {
                 await Mission.create({
+                    kind,
                     number,
                     step,
                     locale,
@@ -105,6 +107,7 @@ module.exports = {
                 mission_id,
             } = req.params;
             const {
+                kind,
                 number,
                 step,
                 locale,
@@ -118,6 +121,7 @@ module.exports = {
             const mission = Mission.findByPk(mission_id);
 
             const number_missions = await Mission.update({
+                kind: kind != null ? kind : mission.kind,
                 number: number != null ? number : mission.number,
                 step: step != null ? step : mission.step,
                 locale: locale != null ? locale : mission.locale,
