@@ -54,7 +54,7 @@ module.exports = {
                 user.missions[i].income = parseFloat((user.missions[i].income * user.post.factor + user.missions[i].transport * 95).toFixed(2));
             }
 
-            res.status(200).json(user);
+            res.status(200).json(user.missions);
 
         } catch (error) {
             return res.status(500).json({
