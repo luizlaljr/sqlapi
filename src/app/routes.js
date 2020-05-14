@@ -28,9 +28,9 @@ routes.get('/missions/:mission_id/crews/:user_id', CrewController.show);
 routes.put('/missions/:mission_id/crews/:user_id', CrewController.update);
 routes.delete('/missions/:mission_id/crews/:user_id', CrewController.destroy);
 
-routes.get('/users/:user_id/reports', ReportController.show);
+routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);
 
-routes.get('/users/:user_id/totalizers', TotalizerController.show);
+routes.get('/users/:user_id/totalizers', LoginMiddleware, TotalizerController.show);
 
 routes.post('/login', LoginController.store);
 
