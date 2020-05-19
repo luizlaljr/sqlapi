@@ -10,7 +10,7 @@ module.exports = {
                     association: 'users',
                     attributes: ['trigram'],
                     through: {
-                        attributes: [],                        
+                        attributes: ['link'],                        
                     },
                 },
             });
