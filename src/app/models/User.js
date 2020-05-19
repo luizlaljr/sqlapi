@@ -12,6 +12,8 @@ class User extends Model {
             name: DataTypes.STRING,
             condition: DataTypes.BOOLEAN,
             date_condition: DataTypes.DATE,
+            document: DataTypes.STRING,
+            operationality: DataTypes.STRING,
             status: DataTypes.BOOLEAN,
             password: DataTypes.STRING,
             profile: DataTypes.STRING,

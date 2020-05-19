@@ -46,6 +46,14 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
+      document:{
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      operationality: {
+        type: Sequelize.STRING(2),
+        allowNull: false,
+      },
       status: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

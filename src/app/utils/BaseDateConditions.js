@@ -1,5 +1,10 @@
 exports.base_date_condition = function(condition, date_condition) {
-    const year = new Date().getFullYear();
-    initdate = `'1/1/${year}'`
-    return condition ? date_condition : initdate;
+    const date = new Date();
+    if (condition) {
+        dateCondition = new Date(date_condition);
+        initdate = `'${dateCondition.getDay()}/${dateCondition.getMonth()+1}/${dateCondition.getFullYear()}'`
+    } else {
+        initdate = `'1/1/${date.getFullYear()}'`
+    }
+    return initdate;
 };

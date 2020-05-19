@@ -35,6 +35,8 @@ module.exports = {
                 name,
                 condition,
                 date_condition,
+                document,
+                operationality,
                 status,
                 password,
             } = req.body;
@@ -55,6 +57,8 @@ module.exports = {
                 name,
                 condition,
                 date_condition,
+                document,
+                operationality,
                 status,
                 password: password_encrypt,
             });
@@ -117,6 +121,8 @@ module.exports = {
                 name,
                 condition,
                 date_condition,
+                document,
+                operationality,
                 status,
                 profile,
             } = req.body;
@@ -140,6 +146,8 @@ module.exports = {
                 name: name != null ? name : user.name,
                 condition: condition != null ? condition : user.condition,
                 date_condition: date_condition != null ? date_condition : user.date_condition,
+                document: document != null ? document : user.document,
+                operationality: operationality != null ? operationality : user.operationality,
                 status: status != null ? status : user.status,
                 password: user.password,
                 profile: profile != null ? profile : user.profile,

@@ -12,7 +12,7 @@ module.exports = {
             } = req.params;
 
             const user = await User.findByPk(user_id, {
-                attributes: ['name','condition','date_condition'],
+                attributes: ['name','condition','date_condition','document','operationality'],
                 include: {
                     association: 'post',
                     attributes: ['name'],
@@ -32,7 +32,9 @@ module.exports = {
                 name: user.name,
                 condition: user.condition,
                 date_condition: user.date_condition,
-                report: users,
+                document: user.document,
+                operationality: user.operationality,
+                reports: users,
             }
 
             res.status(200).json(result);
