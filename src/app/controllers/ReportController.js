@@ -1,10 +1,4 @@
 const User = require('../models/User');
-const {
-    Op
-} = require('sequelize');
-const {
-    base_date_condition
-} = require('../utils/BaseDateConditions');
 
 module.exports = {
 
