@@ -19,12 +19,12 @@ module.exports = {
             const newDate = new Date();
             const initDate = `'1/1/${newDate.getFullYear()}'`;
 
-            const dateCondition = new Date(date_condition);
+            const dateCondition = new Date(user.date_condition);
             const newDateCondition = `'${dateCondition.getMonth()+1}/${dateCondition.getDate()+1}/${dateCondition.getFullYear()}'`;
 
             let users = new User();
 
-            if(condition){
+            if(user.condition){
                 users = await User.sequelize.query(`SELECT crews.link, SUM(amount) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income FROM users LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON users.id = crews.user_id LEFT OUTER JOIN posts ON users.post_id = posts.id WHERE users.id = ${user_id} AND ((missions.start >= ${initDate} AND crews.link = 'D') OR (missions.start >= ${newDateCondition} AND crews.link = 'C')) GROUP BY crews.link, posts.factor`, {
                     model: User,
                     mapToModel: true,
