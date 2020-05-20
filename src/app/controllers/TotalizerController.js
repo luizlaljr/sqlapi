@@ -9,7 +9,7 @@ module.exports = {
             } = req.params;
 
             const user = await User.findByPk(user_id, {
-                attributes: ['name','condition','date_condition','document','operationality'],
+                attributes: ['name','condition','date_condition','document','operationality','activity','project','sex'],
                 include: {
                     association: 'post',
                     attributes: ['name'],
@@ -47,13 +47,15 @@ module.exports = {
                 date_condition: user.date_condition,
                 document: user.document,
                 operationality: user.operationality,
+                activity: user.activity,
+                project: user.project,
+                sex: user.sex,
                 reports: users,
             }
 
             res.status(200).json(result);
 
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request of totalizer.",
             });

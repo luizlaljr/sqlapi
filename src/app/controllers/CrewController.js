@@ -21,7 +21,6 @@ module.exports = {
             return res.status(200).json(crews);
 
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to list crews.",
             });
@@ -102,7 +101,6 @@ module.exports = {
             return res.status(200).json(userExists);
 
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to show link.",
             });
