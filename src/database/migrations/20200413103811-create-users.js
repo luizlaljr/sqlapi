@@ -54,6 +54,18 @@ module.exports = {
         type: Sequelize.STRING(2),
         allowNull: false,
       },
+      activity: {
+        type: Sequelize.STRING(1),
+        allowNull: false,
+      },
+      project: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      sex: {
+        type: Sequelize.STRING(1),
+        allowNull: false,
+      },
       status: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
