@@ -46,8 +46,9 @@ module.exports = {
                 },
             });
             
+
             if (existMission[0] == null) {
-                await Mission.create({
+                const newMission = await Mission.create({
                     kind,
                     number,
                     step,
@@ -60,6 +61,7 @@ module.exports = {
                 });
 
                 return res.status(201).json({
+                    "id": newMission.id,
                     "message": "Mission created with sucess.",
                 });
             }else{
