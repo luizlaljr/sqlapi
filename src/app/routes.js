@@ -5,6 +5,7 @@ const CrewController = require('./controllers/CrewController');
 const ReportController = require('./controllers/ReportController');
 const LoginController = require('./controllers/LoginController');
 const TotalizerController = require('./controllers/TotalizerController');
+const ManagerController = require('./controllers/ManagerController');
 
 const LoginMiddleware = require('./middlewares/LoginMiddleware');
 
@@ -31,6 +32,8 @@ routes.delete('/missions/:mission_id/crews/:user_id', CrewController.destroy);
 routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);
 
 routes.get('/users/:user_id/totalizers', LoginMiddleware, TotalizerController.show);
+
+routes.get('/manager', ManagerController.index);
 
 routes.post('/login', LoginController.store);
 
