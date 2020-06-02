@@ -33,7 +33,7 @@ routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);
 
 routes.get('/users/:user_id/totalizers', LoginMiddleware, TotalizerController.show);
 
-routes.get('/manager', ManagerController.index);
+routes.get('/users/:user_id/manager', LoginMiddleware, ManagerController.index);
 
 routes.post('/login', LoginController.store);
 
