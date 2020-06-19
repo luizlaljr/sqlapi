@@ -4,17 +4,17 @@ module.exports = {
     async index (req, res) {
         try {
 
-            const users = await User.sequelize.query(`SELECT users.id, users.antique, posts.name, users.name, users.condition,  users.date_condition, users.operationality, users.activity, users.project, SUM(CEILING(amount)) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income 
+            const users = await User.sequelize.query(`SELECT users.id, users.antique, posts.name as post, users.name, users.condition,  users.date_condition, users.operationality, users.activity, users.project, SUM(CEILING(amount)) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income 
             FROM users 
             LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON users.id = crews.user_id 
-            LEFT OUTER JOIN posts ON users.post_id = posts.id 
+            LEFT OUTER JOIN ( promotions INNER JOIN posts ON posts.id = promotions.post_id) ON users.id = promotions.user_id 
             WHERE missions.start >= users.date_condition AND users.condition = true AND crews.link = 'C'
             GROUP BY users.id, posts.name, users.name, users.antique, users.condition, users.date_condition, users.operationality, users.activity, users.project, posts.factor
             UNION
-            SELECT users.id, users.antique, posts.name, users.name, users.condition,  users.date_condition, users.operationality, users.activity, users.project, SUM(CEILING(amount)) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income 
+            SELECT users.id, users.antique, posts.name as post, users.name, users.condition,  users.date_condition, users.operationality, users.activity, users.project, SUM(CEILING(amount)) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income 
             FROM users 
             LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON users.id = crews.user_id 
-            LEFT OUTER JOIN posts ON users.post_id = posts.id 
+            LEFT OUTER JOIN ( promotions INNER JOIN posts ON posts.id = promotions.post_id) ON users.id = promotions.user_id 
             WHERE missions.start >= users.date_condition AND users.condition = false AND crews.link = 'D'
             GROUP BY users.id, posts.name, users.name, users.antique, users.condition, users.date_condition, users.operationality, users.activity, users.project, posts.factor
             ORDER BY antique`, {

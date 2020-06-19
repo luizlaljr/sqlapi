@@ -26,10 +26,14 @@ class User extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Post, {
-            foreignKey: 'post_id',
-            as: 'post',
+        this.belongsToMany(models.Post, {
+            foreignKey: 'user_id',
+            through: models.Promotion,
+            as: 'posts',
         });
+        this.hasMany(models.Promotion, {
+            as: 'promotions',
+        })
         this.belongsToMany(models.Mission, {
             foreignKey: 'user_id',
             through: models.Crew,
@@ -38,6 +42,7 @@ class User extends Model {
         this.hasMany(models.Crew, {
             as: 'crews',
         })
+
     }
 
 }

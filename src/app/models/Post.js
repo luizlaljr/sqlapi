@@ -12,6 +12,17 @@ class Post extends Model{
             sequelize,
         })
     };
+
+    static associate(models) {
+        this.belongsToMany(models.User, {
+            foreignKey: 'post_id',
+            through: models.Promotion,
+            as: 'users',
+        });
+        this.hasMany(models.Promotion, {
+            as: 'promotions',
+        })
+    }
 }
 
 module.exports = Post;

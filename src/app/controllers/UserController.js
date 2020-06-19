@@ -7,10 +7,10 @@ module.exports = {
         try {
             const users = await User.findAll({
                 attributes: {
-                    exclude: ['post_id', 'email', 'password', 'createdAt', 'updatedAt']
+                    exclude: ['email', 'password', 'createdAt', 'updatedAt']
                 },
                 include: {
-                    association: 'post',
+                    association: 'posts',
                     attributes: ['name'],
                 },
                 order: [ 'antique'],
@@ -26,12 +26,14 @@ module.exports = {
     },
 
     async store(req, res) {
+
         try {
             const {
                 email,
                 antique,
                 trigram,
                 post,
+                date_promotion,
                 name,
                 condition,
                 date_condition,
@@ -44,19 +46,12 @@ module.exports = {
                 password,
             } = req.body;
 
-            const wanted_post = await Post.findOne({
-                where: {
-                    name: post,
-                },
-            });
-
             const password_encrypt = await bcrypt.hash(password, 10);
 
-            await User.create({
+            const newUser = await User.create({
                 email,
                 antique,
                 trigram,
-                post_id: wanted_post.id,
                 name,
                 condition,
                 date_condition,
@@ -68,6 +63,19 @@ module.exports = {
                 status,
                 password: password_encrypt,
             });
+
+            const wanted_post = await Post.findOne({
+                where: {
+                    name: post,
+                },
+            });
+
+            await newUser.addPost(wanted_post, {
+                through: {
+                    date_promotion: date_promotion, 
+                }
+            });
+
 
             return res.status(201).json({
                 "message": "User created with sucess.",
@@ -96,7 +104,7 @@ module.exports = {
                     ],
                 },
                 include: {
-                    association: 'post',
+                    association: 'posts',
                     attributes: ['name'],
                 },
             });
@@ -116,6 +124,8 @@ module.exports = {
     },
 
     async update(req, res) {
+        const transaction = await User.sequelize.transaction();
+
         try {
             const {
                 user_id,
@@ -124,6 +134,7 @@ module.exports = {
                 antique,
                 trigram,
                 post,
+                date_promotion,
                 name,
                 condition,
                 date_condition,
@@ -136,6 +147,8 @@ module.exports = {
                 profile,
             } = req.body;
 
+            const user = await User.findByPk(user_id);
+
             let wanted_post = '';
             if (post != null) {
                 wanted_post = await Post.findOne({
@@ -143,15 +156,17 @@ module.exports = {
                         name: post,
                     }
                 });
-            }
-
-            const user = await User.findByPk(user_id);
+                await user.addPost(wanted_post, {
+                    through: {
+                        date_promotion: date_promotion, 
+                    }
+                }, {transaction: transaction});
+            }        
 
             const number_users = await User.update({
                 email: user.email,
                 antique: antique != null ? antique : user.antique,
                 trigram: trigram != null ? trigram : user.trigram,
-                post_id: post != null ? wanted_post.id : user.post,
                 name: name != null ? name : user.name,
                 condition: condition != null ? condition : user.condition,
                 date_condition: date_condition != null ? date_condition : user.date_condition,
@@ -166,18 +181,18 @@ module.exports = {
             }, {
                 where: {
                     id: user_id,
-                }
+                },
+                transaction : transaction,
             });
 
-            if (number_users != 1) {
-                throw error;
-            };
+            await transaction.commit();
 
             return res.status(200).json({
                 "message": "User updated with sucess.",
             });
 
         } catch (error) {
+            await transaction.rollback();
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to update user.",
             });
@@ -190,14 +205,12 @@ module.exports = {
                 user_id
             } = req.params;
 
-            const number_users = await User.destroy({
+            await User.destroy({
                 where: {
                     id: user_id,
                 },
             });
-            if (number_users < 1) {
-                throw error;
-            }
+
             return res.status(202).json({
                 "message": "User deleted with sucess.",
             });

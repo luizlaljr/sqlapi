@@ -9,23 +9,22 @@ module.exports = {
             } = req.params;
 
             const user = await User.findByPk(user_id, {
-                attributes: ['name','condition','date_condition','document','operationality','activity','project','sex'],
+                attributes: ['name', 'condition', 'date_condition', 'document', 'operationality', 'activity', 'project', 'sex'],
                 include: {
-                    association: 'post',
+                    association: 'posts',
                     attributes: ['name'],
                 },
             });
 
 
-            const users = await User.sequelize.query(`SELECT crews.link, SUM(CEILING(amount)) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income FROM users LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON users.id = crews.user_id LEFT OUTER JOIN posts ON users.post_id = posts.id WHERE users.id = ${user_id} AND missions.start >= users.date_condition GROUP BY crews.link, posts.factor`, {
+            const users = await User.sequelize.query(`SELECT crews.link, SUM(CEILING(amount)) as amount ,SUM(income) * posts.factor + Sum(transport) * 95 as income FROM users LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON users.id = crews.user_id LEFT OUTER JOIN ( promotions INNER JOIN posts ON posts.id = promotions.post_id) ON users.id = promotions.user_id WHERE users.id = ${user_id} AND missions.start >= users.date_condition GROUP BY crews.link, posts.factor`, {
                 model: User,
                 mapToModel: true,
                 nest: true,
             });
-            
-            
+
             const result = {
-                post: user.post.name,
+                post: user.posts[user.posts.length - 1].name,
                 name: user.name,
                 condition: user.condition,
                 date_condition: user.date_condition,
