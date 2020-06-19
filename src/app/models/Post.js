@@ -8,6 +8,7 @@ class Post extends Model{
         super.init({
             name: DataTypes.STRING,
             factor: DataTypes.FLOAT,
+            wage: DataTypes.FLOAT,
         },{
             sequelize,
         })

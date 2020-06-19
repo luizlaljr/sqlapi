@@ -18,6 +18,10 @@ module.exports = {
         type: Sequelize.REAL,
         allowNull: false,
       },
+      wage: {
+        type: Sequelize.REAL,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
