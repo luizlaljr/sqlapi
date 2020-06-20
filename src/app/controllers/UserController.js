@@ -12,6 +12,9 @@ module.exports = {
                 include: {
                     association: 'posts',
                     attributes: ['name'],
+                    through: {
+                        attributes: [],
+                    }
                 },
                 order: [ 'antique'],
             });
@@ -106,6 +109,9 @@ module.exports = {
                 include: {
                     association: 'posts',
                     attributes: ['name'],
+                    through: {
+                        attributes: [],
+                    }
                 },
             });
 
