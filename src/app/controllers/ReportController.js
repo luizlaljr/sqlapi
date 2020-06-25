@@ -9,7 +9,7 @@ module.exports = {
             } = req.params;
 
             const users = await User.sequelize.query(
-                `SELECT crews.link, kind, number, locale, start, missions.end, amount, income, 
+                `SELECT view_base.wage, crews.link, kind, number, locale, start, missions.end, amount, income, 
                 transport, income * view_base.factor + transport * 95 as income 
                 FROM view_base 
                 LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON view_base.id = crews.user_id 
