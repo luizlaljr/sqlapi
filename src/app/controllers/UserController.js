@@ -169,7 +169,7 @@ module.exports = {
                 }, {transaction: transaction});
             }        
 
-            const number_users = await User.update({
+            await User.update({
                 email: user.email,
                 antique: antique != null ? antique : user.antique,
                 trigram: trigram != null ? trigram : user.trigram,
