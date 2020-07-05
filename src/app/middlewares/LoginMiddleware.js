@@ -11,9 +11,9 @@ module.exports = async (req, res, next) => {
         
         const decode = jwt.verify(token, process.env.JWT_KEY);
         
-        token_user = await User.findOne({ where: {trigram:decode.trigram}});
+        const token_user = await User.findOne({ where: {trigram:decode.trigram}});
         
-        if ( user_id != token_user.id){
+        if ( user_id != token_user.id && token_user.profile == 'C'){
             throw error;
         }
 
