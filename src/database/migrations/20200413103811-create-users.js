@@ -30,10 +30,18 @@ module.exports = {
       },
       condition: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        defaultValue: false,
       },
       date_condition: {
         type: Sequelize.DATEONLY,
+        allowNull: false,
+      },
+      modulus: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      prevision: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       document:{
@@ -56,9 +64,13 @@ module.exports = {
         type: Sequelize.STRING(1),
         allowNull: false,
       },
+      skin: {
+        type: Sequelize.String(3),
+        defaultValue: 'w',
+      },
       status: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        defaultValue: true,
       },
       password: {
         type: Sequelize.STRING,

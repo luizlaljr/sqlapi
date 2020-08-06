@@ -45,6 +45,7 @@ module.exports = {
                 name: user.name,
                 condition: user.condition,
                 date_condition: user.date_condition,
+                modulus: user.modulus,
                 document: user.document,
                 operationality: user.operationality,
                 activity: user.activity,
