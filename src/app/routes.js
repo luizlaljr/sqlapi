@@ -14,7 +14,7 @@ const routes = express.Router();
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
 routes.get('/users/:user_id', UserController.show);
-routes.put('/users/:user_id', UserController.update);
+routes.put('/users/:user_trigram', UserController.update);
 routes.delete('/users/:user_id', UserController.destroy);
 
 routes.get('/missions', MissionController.index);

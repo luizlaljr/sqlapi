@@ -16,9 +16,9 @@ module.exports = {
                         attributes: [],
                     }
                 },
-                order: [ 'antique'],
+                order: ['antique'],
             });
-            
+
             return res.status(200).json(users);
 
         } catch (error) {
@@ -81,7 +81,7 @@ module.exports = {
 
             await newUser.addPost(wanted_post, {
                 through: {
-                    date_promotion: date_promotion, 
+                    date_promotion: date_promotion,
                 }
             });
 
@@ -130,7 +130,7 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to show user.",
-                
+
             });
         };
     },
@@ -140,7 +140,7 @@ module.exports = {
 
         try {
             const {
-                user_id,
+                user_trigram,
             } = req.params;
             const {
                 antique,
@@ -163,7 +163,11 @@ module.exports = {
                 profile,
             } = req.body;
 
-            const user = await User.findByPk(user_id);
+            const user = await User.findOne({
+                where: {
+                    trigram: user_trigram
+                }
+            });
 
             let wanted_post = '';
             if (post != null) {
@@ -174,10 +178,12 @@ module.exports = {
                 });
                 await user.addPost(wanted_post, {
                     through: {
-                        date_promotion: date_promotion, 
+                        date_promotion: date_promotion,
                     }
-                }, {transaction: transaction});
-            }        
+                }, {
+                    transaction: transaction
+                });
+            }
 
             await User.update({
                 email: email != null ? email : user.email,
@@ -187,7 +193,7 @@ module.exports = {
                 condition: condition != null ? condition : user.condition,
                 date_condition: date_condition != null ? date_condition : user.date_condition,
                 modulus: modulus != null ? modulus : user.mudulus,
-                prevision: prevision != null ? prevision : user.prevision, 
+                prevision: prevision != null ? prevision : user.prevision,
                 document: document != null ? document : user.document,
                 operationality: operationality != null ? operationality : user.operationality,
                 activity: activity != null ? activity : user.activity,
@@ -199,9 +205,9 @@ module.exports = {
                 profile: profile != null ? profile : user.profile,
             }, {
                 where: {
-                    id: user_id,
+                    trigram: user_trigram,
                 },
-                transaction : transaction,
+                transaction: transaction,
             });
 
             await transaction.commit();
