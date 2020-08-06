@@ -65,7 +65,7 @@ module.exports = {
         allowNull: false,
       },
       skin: {
-        type: Sequelize.String(3),
+        type: Sequelize.STRING(3),
         defaultValue: 'w',
       },
       status: {
