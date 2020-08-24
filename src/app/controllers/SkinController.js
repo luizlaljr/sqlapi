@@ -8,16 +8,16 @@ module.exports = {
                 skin,
             } = req.params;
 
-            const user = await User.update({
+            await User.update({
                 skin: skin
             }, {
                 where: {
                     id: user_id
                 },
             });
-
+            
             return res.status(200).json({
-                "skin": user[0].skin,
+                "skin": skin,
             });
         } catch (error) {
 
