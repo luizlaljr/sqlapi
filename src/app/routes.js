@@ -37,6 +37,7 @@ routes.get('/users/:user_id/totalizers', LoginMiddleware, TotalizerController.sh
 routes.get('/users/:user_id/manager', LoginMiddleware, ManagerController.index);
 
 routes.put('/users/:user_id/:skin',LoginMiddleware, SkinController.update);
+routes.get('/users/:user_id/skin',LoginMiddleware, SkinController.show);
 
 routes.post('/login', LoginController.store);
 
