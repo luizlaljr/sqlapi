@@ -6,6 +6,7 @@ const ReportController = require('./controllers/ReportController');
 const LoginController = require('./controllers/LoginController');
 const TotalizerController = require('./controllers/TotalizerController');
 const ManagerController = require('./controllers/ManagerController');
+const SkinController = require('./controllers/SkinController');
 
 const LoginMiddleware = require('./middlewares/LoginMiddleware');
 
@@ -34,6 +35,8 @@ routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);
 routes.get('/users/:user_id/totalizers', LoginMiddleware, TotalizerController.show);
 
 routes.get('/users/:user_id/manager', LoginMiddleware, ManagerController.index);
+
+routes.put('/users/:user_id/:skin',LoginMiddleware, SkinController.update);
 
 routes.post('/login', LoginController.store);
 
