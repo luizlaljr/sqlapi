@@ -17,7 +17,7 @@ module.exports = {
             });
 
             return res.status(200).json({
-                "skin": user.skin,
+                "skin": user[0].skin,
             });
         } catch (error) {
 
