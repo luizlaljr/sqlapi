@@ -51,6 +51,7 @@ module.exports = {
                 activity: user.activity,
                 project: user.project,
                 sex: user.sex,
+                skin: user.skin,
                 wage: user.wage,
                 reports: users,
             }
