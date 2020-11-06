@@ -8,14 +8,12 @@ module.exports = {
             } = req.params;
 
             const user = await User.findByPk(user_id);
-
-            console.log(user.skin);
             
             return res.status(200).json({
                 "skin": user.skin,
             });
         } catch (error) {
-            console.log(error);
+            
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to show user skin.",
             });
