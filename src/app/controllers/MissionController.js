@@ -65,7 +65,8 @@ module.exports = {
                     "message": "Mission created with sucess.",
                 });
             }else{
-                return res.status(409).json({
+                return res.status(200).json({
+                    "id": existMission[0].id,
                     "message": "Mission is already in the database.",
                 });
             }
