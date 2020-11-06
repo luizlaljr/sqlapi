@@ -74,12 +74,16 @@ module.exports = {
         try {
             const {
                 mission_id,
-                user_id,
+                trigram,
             } = req.params;
 
             const mission = await Mission.findByPk(mission_id);
 
-            const user = await User.findByPk(user_id);
+            const user = await User.findOne({
+                where: {
+                    trigram
+                },
+            });
 
             const userExists = await mission.hasUser(user);
 
@@ -87,7 +91,7 @@ module.exports = {
                 const crew = await Crew.findOne({
                     where: {
                         [Op.and]: [{
-                            user_id,
+                            user_id: user.id,
                         }, {
                             mission_id,
                         }],
@@ -111,17 +115,23 @@ module.exports = {
         try {
             const {
                 mission_id,
-                user_id,
+                trigram,
             } = req.params;
 
             const {
                 link,
             } = req.body;
 
+            const user = await User.findOne({
+                where: {
+                    trigram
+                },
+            });
+
             const crew = await Crew.update({link:link}, {
                 where: {
                     [Op.and]: [{
-                        user_id,
+                        user_id: user.id,
                     }, {
                         mission_id,
                     }],
@@ -143,12 +153,16 @@ module.exports = {
         try {
             const {
                 mission_id,
-                user_id,
+                trigram,
             } = req.params;
 
             const mission = await Mission.findByPk(mission_id);
 
-            const user = await User.findByPk(user_id);
+            const user = await User.findOne({
+                where: {
+                    trigram
+                },
+            });
 
             await mission.removeUser(user);
 

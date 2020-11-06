@@ -26,9 +26,9 @@ routes.delete('/missions/:mission_id', MissionController.destroy);
 
 routes.get('/missions/:mission_id/crews', CrewController.index);
 routes.post('/missions/:mission_id/crews', CrewController.store);
-routes.get('/missions/:mission_id/crews/:user_id', CrewController.show);
-routes.put('/missions/:mission_id/crews/:user_id', CrewController.update);
-routes.delete('/missions/:mission_id/crews/:user_id', CrewController.destroy);
+routes.get('/missions/:mission_id/crews/:trigram', CrewController.show);
+routes.put('/missions/:mission_id/crews/:trigram', CrewController.update);
+routes.delete('/missions/:mission_id/crews/:trigram', CrewController.destroy);
 
 routes.get('/users/:user_id/reports', LoginMiddleware, ReportController.show);
 
