@@ -12,15 +12,25 @@ module.exports = {
                 mission_id,
             } = req.params;
 
-            const mission = await Mission.findByPk(mission_id);
-
-            const crews = await mission.getUsers({
-                attributes: ['trigram']
+            const crews = await Mission.findByPk(mission_id, {
+                attributes: [],
+                include: {
+                    association: 'users',
+                    attributes: ['trigram'],
+                    through: {
+                        attributes: [],
+                    },
+                },
             });
 
-            return res.status(200).json(crews);
+            const listCrews = [];
+
+            crews.users.map( c => (listCrews.push(c.trigram)))
+
+            return res.status(200).json(listCrews);
 
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to list crews.",
             });
