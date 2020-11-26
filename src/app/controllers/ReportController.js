@@ -13,7 +13,7 @@ module.exports = {
                 transport, income * view_base.factor + transport * 95 as income 
                 FROM view_base 
                 LEFT OUTER JOIN ( crews INNER JOIN missions ON missions.id = crews.mission_id) ON view_base.id = crews.user_id 
-                WHERE view_base.id = ${user_id} AND missions.start >= view_base.date_condition 
+                WHERE view_base.id = ${user_id} AND missions.start >= view_base.date_query 
                 ORDER BY start DESC`, {
                     model: User,
                     mapToModel: true,
