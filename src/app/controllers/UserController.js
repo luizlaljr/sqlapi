@@ -153,6 +153,7 @@ module.exports = {
                 name,
                 condition,
                 date_condition,
+                date_query,
                 modulus,
                 prevision,
                 document,
