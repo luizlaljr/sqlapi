@@ -12,6 +12,7 @@ class User extends Model {
             name: DataTypes.STRING,
             condition: DataTypes.BOOLEAN,
             date_condition: DataTypes.DATE,
+            date_query: DataTypes.DATE,
             modulus: DataTypes.BOOLEAN,
             prevision: DataTypes.INTEGER,
             document: DataTypes.STRING,
