@@ -40,6 +40,7 @@ module.exports = {
 
             const existMission = await Mission.findAll({
                 where: {
+                    kind: {[Op.eq] : kind},
                     number: { [Op.eq] : number},
                     step: { [Op.eq] : step},
                     start: { [Op.eq] : new Date(start)},
@@ -169,6 +170,7 @@ module.exports = {
 
             const number_missions = await Mission.destroy({
                 where: {
+                    kind,
                     number,
                     step,
                     start
