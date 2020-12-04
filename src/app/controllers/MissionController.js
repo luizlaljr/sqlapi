@@ -165,21 +165,17 @@ module.exports = {
                 start
             } = req.query;
 
-            console.log(number);
-            console.log(step);
-            console.log(start);
-
             const number_missions = await Mission.destroy({
                 where: {
                     kind,
                     number,
                     step,
-                    start
+                    start: new Date(start)
                 },
             });
 
             if (number_missions < 1) {
-                throw error;
+                return res.status(204)
             };
 
             return res.status(202).json({
@@ -187,6 +183,7 @@ module.exports = {
             });
 
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to delete mission.",
             });
