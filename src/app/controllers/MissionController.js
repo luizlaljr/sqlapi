@@ -156,13 +156,22 @@ module.exports = {
 
     async destroy(req, res) {
         try {
+
             const {
-                mission_id,
-            } = req.params;
+                number,
+                step,
+                start
+            } = req.query;
+
+            console.log(number);
+            console.log(step);
+            console.log(start);
 
             const number_missions = await Mission.destroy({
                 where: {
-                    id: mission_id,
+                    number,
+                    step,
+                    start
                 },
             });
 
@@ -175,6 +184,7 @@ module.exports = {
             });
 
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to delete mission.",
             });
