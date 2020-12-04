@@ -159,6 +159,7 @@ module.exports = {
         try {
 
             const {
+                kind,
                 number,
                 step,
                 start
@@ -186,7 +187,6 @@ module.exports = {
             });
 
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 "message-error": "There was a problem when handling this request to delete mission.",
             });
