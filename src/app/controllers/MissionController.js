@@ -165,22 +165,23 @@ module.exports = {
                 start
             } = req.query;
 
-            const number_missions = await Mission.destroy({
+            const findMission = await Mission.findOne({
                 where: {
                     kind,
                     number,
-                    step,
+                    step: step==''?null:step,
                     start: new Date(start)
-                },
+                }
             });
 
-            if (number_missions < 1) {
-                return res.status(204)
-            };
+            if (findMission) {
+                await findMission.destroy();
+                return res.status(202).json({
+                    "message": "Mission deleted with sucess.",
+                });
+            }
 
-            return res.status(202).json({
-                "message": "Mission deleted with sucess.",
-            });
+            return res.status(204);
 
         } catch (error) {
             console.log(error);
