@@ -41,6 +41,7 @@ module.exports = {
                 operationality: user.operationality,
                 activity: user.activity,
                 project: user.project,
+                prevision: user.prevision,
                 sex: user.sex,
                 skin: user.skin,
                 wage: user.wage,
