@@ -31,7 +31,7 @@ module.exports = {
                 trigram: userFound.trigram,
                 email: userFound.email,
             },
-            process.env.JWT_KEY,
+            `${process.env.JWT_KEY}`,
             {
                 expiresIn: '1d',
             })
