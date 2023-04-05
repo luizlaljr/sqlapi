@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
         const token = req.headers.
         authorization.split(' ')[1];
         
-        const decode = jwt.verify(token, process.env.JWT_KEY);
+        const decode = jwt.verify(token, `${process.env.JWT_KEY}`);
         
         const token_user = await User.findOne({ where: {trigram:decode.trigram}});
         
